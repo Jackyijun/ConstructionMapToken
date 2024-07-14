@@ -34,7 +34,7 @@ async function generateToken(clientId, clientSecret) {
   params.append('expiration', 1440); // Token expiration time in minutes (optional)
   params.append('f', 'json');
 
-  const response = await fetch('https://www.arcgis.com/sharing/rest/oauth2/token', {
+  const response = await fetch('https://admin-enterprise-gis.ucsd.edu/portal/sharing/rest/oauth2/token', {
     method: 'POST',
     body: params
   });

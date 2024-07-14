@@ -7,29 +7,6 @@ require([
     "esri/widgets/Legend"
   ], function(IdentityManager, Map, MapView, FeatureLayer, Search, Legend) {
 
-
-    // async function generateToken(clientId, clientSecret) {
-    //   const params = new URLSearchParams();
-    //   params.append('client_id', clientId);
-    //   params.append('client_secret', clientSecret);
-    //   params.append('grant_type', 'client_credentials');
-    //   params.append('expiration', 1440); // Token expiration time in minutes (optional)
-    //   params.append('f', 'json');
-  
-    //   const response = await fetch('https://www.arcgis.com/sharing/rest/oauth2/token', {
-    //     method: 'POST',
-    //     body: params
-    //   });
-  
-    //   const data = await response.json();
-  
-    //   if (data.error) {
-    //     throw new Error(data.error.message);
-    //   }
-  
-    //   return data.access_token;
-    // }
-
     async function fetchToken() {
       const response = await fetch('http://localhost:3000/generateToken');
       const data = await response.json();
@@ -42,15 +19,11 @@ require([
     }
   
     async function initialize() {
-      // const token = await generateToken(process.env.CLIENT_ID,process.env.CLIENT_SECRET); // Get the temporary token
-      // const token = await generateToken("rsLkOWeKLsKiXnrf","b5867dbe3f9a40ad9d6864f941e9e0c5");
-      // console.log(token);
       const token = await fetchToken(); // Fetch the token from the backend
       
       IdentityManager.registerToken({
-        server: "https://ucsdonline.maps.arcgis.com",
+        server: "https://admin-enterprise-gis.ucsd.edu/portal",
         token: token,
-        // userId: "yil@ucsd.edu", // Replace with your ArcGIS username
         expires: Date.now() + 2 * 60 * 60 * 1000 // Token expiration time in milliseconds
       });
   
@@ -79,17 +52,17 @@ require([
       });
   
       var layer = new FeatureLayer({
-        url: `https://services1.arcgis.com/eGSDp8lpKe5izqVc/arcgis/rest/services/polygon_busyness_layer/FeatureServer/0`,
+        url: `https://admin-enterprise-gis.ucsd.edu/server/rest/services/Hosted/Busyness_poly/FeatureServer/0`,
         outFields: ["*"], // Ensure all fields are fetched
         popupTemplate: {
-          title: "{building}",
+          title: "{Name}",
           content: [{
             type: "fields",
             fieldInfos: [
-              { fieldName: "building", label: "Building" },
-              { fieldName: "busyness", label: "Busyness" },
-              { fieldName: "Shape__Area", label: "Shape Area" },
-              { fieldName: "Shape__Length", label: "Shape Length" }
+              { fieldName: "Name", label: "Name" },
+              { fieldName: "AcademicStatus", label: "AcademicStatus" },
+              { fieldName: "BuildingCategory", label: "BuildingCategory" },
+              { fieldName: "Busyness", label: "Busyness" }
             ]
           }]
         }
