@@ -22,7 +22,7 @@ require([
       const token = await fetchToken(); // Fetch the token from the backend
       
       IdentityManager.registerToken({
-        server: "https://admin-enterprise-gis.ucsd.edu/portal",
+        server: "https://admin-enterprise-gis.ucsd.edu/portal/sharing/rest",
         token: token,
         expires: Date.now() + 2 * 60 * 60 * 1000 // Token expiration time in milliseconds
       });
@@ -48,21 +48,20 @@ require([
         container: "viewDiv",
         map: map,
         center: [-117.236378, 32.8800607], // Longitude, latitude
-        zoom: 15
+        zoom: 6
       });
   
       var layer = new FeatureLayer({
-        url: `https://admin-enterprise-gis.ucsd.edu/server/rest/services/Hosted/Busyness_poly/FeatureServer/0`,
+        url: `https://admin-enterprise-gis.ucsd.edu/server/rest/services/Hosted/CA_Counties_Enterprise_Testing/FeatureServer`,
         outFields: ["*"], // Ensure all fields are fetched
         popupTemplate: {
           title: "{Name}",
           content: [{
             type: "fields",
             fieldInfos: [
-              { fieldName: "Name", label: "Name" },
-              { fieldName: "AcademicStatus", label: "AcademicStatus" },
-              { fieldName: "BuildingCategory", label: "BuildingCategory" },
-              { fieldName: "Busyness", label: "Busyness" }
+              { fieldName: "NAME", label: "County" },
+              { fieldName: "ALAND", label: "Land" },
+              { fieldName: "AWATER", label: "Water" },
             ]
           }]
         }
