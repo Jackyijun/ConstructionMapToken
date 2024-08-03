@@ -52,7 +52,7 @@ require([
       });
   
       var layer = new FeatureLayer({
-        url: `https://admin-enterprise-gis.ucsd.edu/server/rest/services/Hosted/CA_Counties_Enterprise_Testing/FeatureServer`,
+        url: `https://admin-enterprise-gis.ucsd.edu/server/rest/services/Construction/ConstructionProjectDashboard/FeatureServer/0`,
         outFields: ["*"], // Ensure all fields are fetched
         popupTemplate: {
           title: "{Name}",
